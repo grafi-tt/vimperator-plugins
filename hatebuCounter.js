@@ -41,5 +41,6 @@
     };
     liberator.modules.autocommands.add('LocationChange', '.*',
                                        'js liberator.plugins.hbCountUpdate()');
+    liberator.modules.autocommands.add('LocationChange', '.*', 'echo ""');
 })();
 // vim:sw=4 ts=4 et:
