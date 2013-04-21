@@ -24,13 +24,11 @@
         'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'+
         'AAAA//8AAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIABAACAAQAAgAEAAIAB'+
         'AACAAQAA//8AAA==';
-    var hbCountIcon = document.getElementById('status-bar')
-                              .insertBefore(document.createElement('statusbarpanel'),
-                                            document.getElementById('security-button')
-                                                    .nextSibling);
-    hbCountIcon.setAttribute('id', 'hatena-bookmark-count-icon');
+
+    var hbCountIcon = document.getElementById("liberator-statusline")
+                              .appendChild(document.createElement('image'));
     hbCountIcon.setAttribute('src', ICON);
-    hbCountIcon.setAttribute('class', 'statusbarpanel-iconic');
+    hbCountIcon.setAttribute('id', 'hatena-bookmark-count-icon');
     hbCountIcon.addEventListener('click', function(e) {
         liberator.open('http://b.hatena.ne.jp/entry/' + liberator.modules.buffer.URL
                                                                  .replace(/#/g, '%23'),
