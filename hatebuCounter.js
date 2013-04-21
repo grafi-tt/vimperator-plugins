@@ -2,6 +2,9 @@
 // Maintainer: mattn <mattn.jp@gmail.com> - http://mattn.kaoriya.net
 
 (function() {
+    var ignoreUrlPattern = liberator.globalVariables.hbCountIgnoreUrlPattern
+        ? new RegExp(liberator.globalVariables.hbCountIgnoreUrlPattern)
+        : /^https/;
     const ICON = 'data:image/x-icon;base64,'+
         'AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAA'+
         'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'+
@@ -30,14 +33,17 @@
     hbCountIcon.setAttribute('src', ICON);
     hbCountIcon.setAttribute('id', 'hatena-bookmark-count-icon');
     hbCountIcon.addEventListener('click', function(e) {
-        liberator.open('http://b.hatena.ne.jp/entry/' + liberator.modules.buffer.URL
-                                                                 .replace(/#/g, '%23'),
+        liberator.open('http://b.hatena.ne.jp/entry/' +
+                           liberator.modules.buffer.URL.replace(/#/g, '%23'),
                        liberator.NEW_TAB);
     }, false);
+
     liberator.plugins.hbCountUpdate = function() {
-        hbCountIcon.setAttribute('src',
-                                 'http://b.hatena.ne.jp/entry/image/' +
-                                 liberator.modules.buffer.URL.replace(/#/g, '%23'));
+        var url = liberator.modules.buffer.URL;
+        var src = (url.match(ignoreUrlPattern))
+            ? ICON
+            : 'http://b.hatena.ne.jp/entry/image/' + url.replace(/#/g, '%23');
+        hbCountIcon.setAttribute('src', src);
     };
     liberator.modules.autocommands.add('LocationChange', '.*',
                                        'js liberator.plugins.hbCountUpdate()');
